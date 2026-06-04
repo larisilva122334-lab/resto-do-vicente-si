@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduAfiliados - Cursos Online com Sistema de Afiliados</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary: #6366f1; --primary-dark: #4f46e5; --primary-light: #818cf8;
+  --secondary: #10b981; --accent: #f59e0b; --danger: #ef4444;
+  --dark: #0f172a; --dark-light: #1e293b; --gray: #64748b; --gray-light: #e2e8f0;
+  --white: #ffffff; --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  --gradient-2: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --shadow: 0 10px 40px rgba(0,0,0,0.1); --shadow-lg: 0 25px 50px rgba(0,0,0,0.15);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+
+.navbar { background: var(--white); box-shadow: var(--shadow); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 2rem; }
+.nav-container { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+.logo { font-size: 1.8rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo i { -webkit-text-fill-color: #6366f1; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--gray); font-weight: 500; transition: all 0.3s; position: relative; }
+.nav-links a:hover, .nav-links a.active { color: var(--primary); }
+.nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; right: 0; height: 3px; background: var(--gradient); border-radius: 2px; }
+.nav-actions { display: flex; gap: 1rem; align-items: center; }
+.btn { padding: 10px 24px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+.btn-primary { background: var(--gradient); color: var(--white); box-shadow: 0 4px 15px rgba(99,102,241,0.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99,102,241,0.5); }
+.btn-secondary { background: var(--white); color: var(--primary); border: 2px solid var(--primary); }
+.btn-secondary:hover { background: var(--primary); color: var(--white); }
+.btn-success { background: var(--gradient-2); color: var(--white); }
+.btn-danger { background: var(--danger); color: var(--white); }
+.btn-sm { padding: 6px 16px; font-size: 0.85rem; }
+.btn-ghost { background: transparent; color: var(--gray); }
+.btn-ghost:hover { color: var(--primary); }
+
+.hero { background: var(--dark); color: var(--white); padding: 140px 2rem 100px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%); animation: pulse 4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.hero-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+.hero h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; max-width: 500px; }
+.hero-stats { display: flex; gap: 2rem; margin-top: 3rem; }
+.stat { text-align: center; }
+.stat-number { font-size: 2.5rem; font-weight: 900; color: var(--primary-light); }
+.stat-label { color: #94a3b8; font-size: 0.9rem; }
+.hero-visual { position: relative; }
+.hero-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transform: rotate(5deg); animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:rotate(5deg) translateY(0)} 50%{transform:rotate(5deg) translateY(-20px)} }
+.hero-card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.hero-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.hero-progress { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+.hero-progress-bar { height: 100%; background: var(--gradient); width: 75%; border-radius: 4px; }
+
+.section { padding: 80px 2rem; }
+.section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+.section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+.section-header p { color: var(--gray); font-size: 1.1rem; }
+.container { max-width: 1400px; margin: 0 auto; }
+
+.courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+.course-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.4s; border: 1px solid var(--gray-light); position: relative; }
+.course-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+.course-image { height: 200px; background: var(--gradient); position: relative; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: rgba(255,255,255,0.3); }
+.course-badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: var(--dark); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+.course-content { padding: 1.5rem; }
+.course-category { color: var(--primary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.course-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+.course-meta { display: flex; gap: 1rem; color: var(--gray); font-size: 0.85rem; margin-bottom: 1rem; }
+.course-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--gray-light); }
+.course-price { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.course-price .old { font-size: 0.9rem; color: var(--gray); text-decoration: line-through; margin-left: 8px; font-weight: 400; }
+.course-commission { background: var(--secondary); color: var(--white); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
+
+.affiliate-section { background: var(--dark); color: var(--white); padding: 100px 2rem; position: relative; overflow: hidden; }
+.affiliate-section::before { content: ''; position: absolute; bottom: -30%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%); }
+.affiliate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+.affiliate-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.affiliate-feature { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; transition: all 0.3s; }
+.affiliate-feature:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); }
+.affiliate-feature i { font-size: 2rem; color: var(--secondary); margin-bottom: 1rem; }
+.affiliate-feature h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.affiliate-feature p { color: #94a3b8; font-size: 0.9rem; }
+
+.steps { display: flex; justify-content: space-between; gap: 2rem; position: relative; }
+.steps::before { content: ''; position: absolute; top: 40px; left: 10%; right: 10%; height: 3px; background: var(--gradient); z-index: 0; }
+.step { text-align: center; position: relative; z-index: 1; flex: 1; }
+.step-number { width: 80px; height: 80px; background: var(--white); border: 4px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 0 auto 1.5rem; box-shadow: var(--shadow); }
+.step h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.step p { color: var(--gray); font-size: 0.9rem; }
+
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+.testimonial { background: var(--white); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); position: relative; }
+.testimonial::before { content: '"'; position: absolute; top: 10px; right: 20px; font-size: 5rem; color: var(--gray-light); font-family: serif; line-height: 1; }
+.testimonial-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.testimonial-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 1.2rem; }
+.testimonial-name { font-weight: 700; }
+.testimonial-role { color: var(--gray); font-size: 0.85rem; }
+.testimonial-earnings { background: rgba(16,185,129,0.1); color: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-top: 0.5rem; display: inline-block; }
+.stars { color: var(--accent); margin-bottom: 1rem; }
+
+.page { display: none; min-height: 100vh; padding-top: 70px; }
+.page.active { display: block; }
+
+.auth-container { min-height: calc(100vh - 70px); display: flex; align-items: center; justify-content: center; padding: 2rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%); }
+.auth-box { background: var(--white); border-radius: 24px; padding: 3rem; width: 100%; max-width: 450px; box-shadow: var(--shadow-lg); border: 1px solid var(--gray-light); }
+.auth-box h2 { font-size: 2rem; margin-bottom: 0.5rem; text-align: center; }
+.auth-box p { color: var(--gray); text-align: center; margin-bottom: 2rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid var(--gray-light); border-radius: 12px; font-size: 1rem; transition: all 0.3s; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
+.auth-box .btn { width: 100%; justify-content: center; padding: 14px; font-size: 1rem; }
+.auth-footer { text-align: center; margin-top: 1.5rem; color: var(--gray); }
+.auth-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.role-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.role-option { border: 2px solid var(--gray-light); border-radius: 12px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+.role-option:hover, .role-option.selected { border-color: var(--primary); background: rgba(99,102,241,0.05); }
+.role-option i { font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem; display: block; }
+.role-option span { font-weight: 600; font-size: 0.9rem; }
+
+.dashboard { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 70px); }
+.sidebar { background: var(--dark); color: var(--white); padding: 2rem 1rem; position: fixed; width: 260px; height: calc(100vh - 70px); overflow-y: auto; }
+.sidebar-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 2rem; padding: 0 1rem; display: flex; align-items: center; gap: 10px; }
+.sidebar-logo i { color: var(--primary-light); }
+.sidebar-menu { list-style: none; }
+.sidebar-menu li { margin-bottom: 0.5rem; }
+.sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 1rem; border-radius: 12px; color: #94a3b8; text-decoration: none; transition: all 0.3s; font-weight: 500; }
+.sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(99,102,241,0.2); color: var(--white); }
+.sidebar-menu a i { width: 24px; text-align: center; }
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1.5rem 1rem; }
+.sidebar-user { padding: 1rem; display: flex; align-items: center; gap: 12px; margin-top: auto; }
+.sidebar-user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.sidebar-user-info { flex: 1; }
+.sidebar-user-name { font-weight: 600; font-size: 0.9rem; }
+.sidebar-user-role { font-size: 0.75rem; color: #94a3b8; }
+
+.main-content { margin-left: 260px; padding: 2rem; background: #f8fafc; min-height: calc(100vh - 70px); }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.page-header h1 { font-size: 1.8rem; font-weight: 800; }
+.breadcrumb { color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.stat-card { background: var(--white); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); position: relative; overflow: hidden; }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.stat-card.purple::before { background: var(--primary); }
+.stat-card.green::before { background: var(--secondary); }
+.stat-card.orange::before { background: var(--accent); }
+.stat-card.red::before { background: var(--danger); }
+.stat-card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+.stat-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+.stat-card.purple .stat-card-icon { background: rgba(99,102,241,0.1); color: var(--primary); }
+.stat-card.green .stat-card-icon { background: rgba(16,185,129,0.1); color: var(--secondary); }
+.stat-card.orange .stat-card-icon { background: rgba(245,158,11,0.1); color: var(--accent); }
+.stat-card.red .stat-card-icon { background: rgba(239,68,68,0.1); color: var(--danger); }
+.stat-card-trend { font-size: 0.8rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.trend-up { background: rgba(16,185,129,0.1); color: var(--secondary); }
+.trend-down { background: rgba(239,68,68,0.1); color: var(--danger); }
+.stat-card-value { font-size: 2rem; font-weight: 900; margin-bottom: 0.25rem; }
+.stat-card-label { color: var(--gray); font-size: 0.9rem; }
+
+.data-table { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--gray-light); overflow: hidden; }
+.table-header { padding: 1.5rem; border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-between; align-items: center; }
+.table-header h3 { font-size: 1.2rem; font-weight: 700; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 1rem 1.5rem; text-align: left; }
+th { background: #f8fafc; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); }
+tr { border-bottom: 1px solid var(--gray-light); transition: all 0.2s; }
+tr:hover { background: #f8fafc; }
+td { font-size: 0.95rem; }
+.table-user { display: flex; align-items: center; gap: 12px; }
+.table-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 0.8rem; }
+.status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+.status-active { background: rgba(16,185,129,0.1); color: var(--secondary); }
+.status-pending { background: rgba(245,158,11,0.1); color: var(--accent); }
+.status-completed { background: rgba(99,102,241,0.1); color: var(--primary); }
+
+.link-card { background: var(--white); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); margin-bottom: 1.5rem; }
+.link-card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.link-card-course { font-weight: 700; font-size: 1.1rem; }
+.link-card-commission { background: var(--secondary); color: var(--white); padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; }
+.link-input-group { display: flex; gap: 0.5rem; }
+.link-input-group input { flex: 1; padding: 12px 16px; border: 2px solid var(--gray-light); border-radius: 12px; font-size: 0.9rem; background: #f8fafc; }
+.link-input-group button { padding: 12px 20px; }
+.link-stats { display: flex; gap: 2rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-light); }
+.link-stat { text-align: center; }
+.link-stat-value { font-size: 1.3rem; font-weight: 800; }
+.link-stat-label { font-size: 0.8rem; color: var(--gray); }
+
+.chart-container { background: var(--white); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); }
+.chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.chart-bar { display: flex; align-items: flex-end; gap: 8px; height: 200px; }
+.chart-bar-item { flex: 1; background: var(--gradient); border-radius: 8px 8px 0 0; transition: all 0.3s; position: relative; min-height: 20px; }
+.chart-bar-item:hover { opacity: 0.8; }
+.chart-bar-item::after { content: attr(data-value); position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: 700; opacity: 0; transition: all 0.3s; }
+.chart-bar-item:hover::after { opacity: 1; }
+.chart-labels { display: flex; gap: 8px; margin-top: 0.5rem; }
+.chart-label { flex: 1; text-align: center; font-size: 0.75rem; color: var(--gray); }
+
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--white); border-radius: 24px; padding: 2rem; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: modalIn 0.3s ease; }
+@keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.modal-header h3 { font-size: 1.3rem; font-weight: 700; }
+.modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray); }
+
+.toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 3000; display: flex; flex-direction: column; gap: 0.5rem; }
+.toast { background: var(--dark); color: var(--white); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; animation: toastIn 0.3s ease; min-width: 300px; }
+@keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.toast.success { border-left: 4px solid var(--secondary); }
+.toast.error { border-left: 4px solid var(--danger); }
+.toast.info { border-left: 4px solid var(--primary); }
+
+.footer { background: var(--dark); color: var(--white); padding: 60px 2rem 30px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1400px; margin: 0 auto; }
+.footer-brand p { color: #94a3b8; margin: 1rem 0; }
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: var(--white); transition: all 0.3s; }
+.footer-social a:hover { background: var(--primary); transform: translateY(-3px); }
+.footer h4 { font-size: 1.1rem; margin-bottom: 1.5rem; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.75rem; }
+.footer-links a { color: #94a3b8; text-decoration: none; transition: all 0.3s; }
+.footer-links a:hover { color: var(--white); }
+.footer-bottom { max-width: 1400px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #94a3b8; font-size: 0.9rem; }
+
+@media (max-width: 1024px) {
+  .hero-container, .affiliate-grid { grid-template-columns: 1fr; }
+  .dashboard { grid-template-columns: 1fr; }
+  .sidebar { position: relative; width: 100%; height: auto; }
+  .main-content { margin-left: 0; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .steps { flex-direction: column; }
+  .steps::before { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.2rem; }
+  .section-header h2 { font-size: 1.8rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .affiliate-features { grid-template-columns: 1fr; }
+}
+
+.fade-in { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.progress-ring { position: relative; width: 120px; height: 120px; }
+.progress-ring svg { transform: rotate(-90deg); }
+.progress-ring-circle { fill: none; stroke-width: 8; }
+.progress-ring-bg { stroke: var(--gray-light); }
+.progress-ring-fill { stroke: var(--primary); stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.progress-ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: 900; }
+
+.tabs { display: flex; gap: 0.5rem; background: var(--gray-light); padding: 4px; border-radius: 12px; margin-bottom: 2rem; }
+.tab { padding: 10px 24px; border-radius: 10px; border: none; background: transparent; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+.tab.active { background: var(--white); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+.search-bar { position: relative; margin-bottom: 2rem; }
+.search-bar input { width: 100%; padding: 14px 20px 14px 50px; border: 2px solid var(--gray-light); border-radius: 16px; font-size: 1rem; transition: all 0.3s; }
+.search-bar input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
+.search-bar i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gray); }
+
+.filter-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.filter-tag { padding: 8px 16px; border-radius: 20px; border: 2px solid var(--gray-light); background: var(--white); cursor: pointer; font-weight: 500; transition: all 0.3s; font-size: 0.9rem; }
+.filter-tag:hover, .filter-tag.active { border-color: var(--primary); background: rgba(99,102,241,0.05); color: var(--primary); }
+
+.course-detail-hero { background: var(--dark); color: var(--white); padding: 120px 2rem 60px; position: relative; overflow: hidden; }
+.course-detail-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+.course-detail-info h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+.course-detail-meta { display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.course-detail-meta-item { display: flex; align-items: center; gap: 8px; color: #94a3b8; }
+.course-detail-meta-item i { color: var(--primary-light); }
+.course-detail-card { background: var(--white); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow-lg); color: var(--dark); position: sticky; top: 100px; }
+.course-detail-price { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem; }
+.course-detail-price .old { font-size: 1.2rem; color: var(--gray); text-decoration: line-through; font-weight: 400; }
+.course-detail-features { list-style: none; margin: 1.5rem 0; }
+.course-detail-features li { display: flex; align-items: center; gap: 12px; padding: 0.75rem 0; border-bottom: 1px solid var(--gray-light); }
+.course-detail-features li i { color: var(--secondary); }
+
+.video-player { background: var(--dark); border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--white); position: relative; }
+.video-player i { font-size: 4rem; opacity: 0.5; }
+.video-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); cursor: pointer; }
+.video-play-btn { width: 80px; height: 80px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; box-shadow: var(--shadow-lg); transition: all 0.3s; }
+.video-play-btn:hover { transform: scale(1.1); }
+
+.lessons-list { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--gray-light); }
+.lesson-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--gray-light); cursor: pointer; transition: all 0.2s; }
+.lesson-item:hover { background: #f8fafc; }
+.lesson-item.active { background: rgba(99,102,241,0.05); border-left: 4px solid var(--primary); }
+.lesson-number { width: 36px; height: 36px; border-radius: 50%; background: var(--gray-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; }
+.lesson-item.active .lesson-number { background: var(--primary); color: var(--white); }
+.lesson-info { flex: 1; }
+.lesson-title { font-weight: 600; margin-bottom: 0.25rem; }
+.lesson-duration { font-size: 0.8rem; color: var(--gray); }
+.lesson-status { color: var(--secondary); }
+
+.mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark); }
+@media (max-width: 768px) { .mobile-menu-btn { display: block; } }
+
+.empty-state { text-align: center; padding: 4rem 2rem; }
+.empty-state i { font-size: 4rem; color: var(--gray-light); margin-bottom: 1rem; }
+.empty-state h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.empty-state p { color: var(--gray); margin-bottom: 1.5rem; }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+.badge-primary { background: rgba(99,102,241,0.1); color: var(--primary); }
+.badge-success { background: rgba(16,185,129,0.1); color: var(--secondary); }
+.badge-warning { background: rgba(245,158,11,0.1); color: var(--accent); }
+
+.withdrawal-card { background: var(--white); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); }
+.withdrawal-balance { font-size: 3rem; font-weight: 900; color: var(--primary); }
+.withdrawal-balance-label { color: var(--gray); margin-bottom: 1.5rem; }
+.withdrawal-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.withdrawal-method { border: 2px solid var(--gray-light); border-radius: 12px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+.withdrawal-method:hover, .withdrawal-method.selected { border-color: var(--primary); background: rgba(99,102,241,0.05); }
+.withdrawal-method i { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+
+.admin-course-form { background: var(--white); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); margin-bottom: 2rem; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.affiliate-link-box { background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%); border: 2px dashed var(--primary); border-radius: 16px; padding: 1.5rem; text-align: center; margin-bottom: 1.5rem; }
+.affiliate-link-box input { width: 100%; padding: 12px; border: 2px solid var(--gray-light); border-radius: 12px; font-size: 0.9rem; text-align: center; margin-bottom: 1rem; background: var(--white); }
+
+.course-progress-bar { height: 6px; background: var(--gray-light); border-radius: 3px; overflow: hidden; margin-top: 0.5rem; }
+.course-progress-fill { height: 100%; background: var(--gradient); border-radius: 3px; transition: width 0.5s ease; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo" onclick="showPage('home')">
+      <i class="fas fa-graduation-cap"></i> EduAfiliados
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="active" onclick="showPage('home')">Inicio</a></li>
+      <li><a href="#" onclick="showPage('courses')">Cursos</a></li>
+      <li><a href="#" onclick="showPage('affiliate')">Seja Afiliado</a></li>
+      <li><a href="#" onclick="showPage('about')">Sobre</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-secondary btn-sm" onclick="showPage('login')">Entrar</button>
+      <button class="btn btn-primary btn-sm" onclick="showPage('register')">Cadastrar</button>
+    </div>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-container">
+      <div>
+        <h1>Aprenda e <span>Ganhe</span> ao Mesmo Tempo</h1>
+        <p>Cursos online de alta qualidade com um sistema de afiliados que permite voce ganhar comissoes indicando para amigos.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="showPage('courses')" style="font-size:1.1rem;padding:14px 32px;">
+            <i class="fas fa-play-circle"></i> Explorar Cursos
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('register')" style="font-size:1.1rem;padding:14px 32px;">
+            <i class="fas fa-user-plus"></i> Ser Afiliado
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-number">150+</div><div class="stat-label">Cursos</div></div>
+          <div class="stat"><div class="stat-number">50K+</div><div class="stat-label">Alunos</div></div>
+          <div class="stat"><div class="stat-number">12K+</div><div class="stat-label">Afiliados</div></div>
+          <div class="stat"><div class="stat-number">R$2M+</div><div class="stat-label">Pagos em Comissoes</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-avatar">JD</div>
+            <div><div style="font-weight:700">Joao Dev</div><div style="font-size:0.85rem;color:#94a3b8">Marketing Digital</div></div>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;">
+              <span>Progresso do Curso</span><span style="color:var(--primary-light);font-weight:700">75%</span>
+            </div>
+            <div class="hero-progress"><div class="hero-progress-bar"></div></div>
+          </div>
+          <div style="display:flex;gap:1rem;font-size:0.85rem;color:#94a3b8;">
+            <span><i class="fas fa-clock"></i> 12h restantes</span>
+            <span><i class="fas fa-trophy"></i> 3 certificados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Cursos em Destaque</h2>
+        <p>Os cursos mais populares da nossa plataforma. Comece a aprender hoje mesmo!</p>
+      </div>
+      <div class="courses-grid" id="featuredCourses"></div>
+      <div style="text-align:center;margin-top:3rem;">
+        <button class="btn btn-primary" onclick="showPage('courses')">Ver Todos os Cursos <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="affiliate-section">
+    <div class="container">
+      <div class="affiliate-grid">
+        <div>
+          <h2 style="font-size:2.8rem;font-weight:900;margin-bottom:1.5rem;line-height:1.1;">Ganhe ate <span style="color:var(--secondary)">50%</span> de Comissao</h2>
+          <p style="color:#94a3b8;font-size:1.1rem;margin-bottom:2rem;">Nosso programa de afiliados e um dos mais generosos do mercado. Indique cursos, ajude pessoas a aprenderem e ganhe dinheiro fazendo o que ama.</p>
+          <button class="btn btn-success" onclick="showPage('register')" style="font-size:1.1rem;padding:14px 32px;"><i class="fas fa-rocket"></i> Comecar Agora</button>
+        </div>
+        <div class="affiliate-features">
+          <div class="affiliate-feature"><i class="fas fa-link"></i><h4>Link Personalizado</h4><p>Cada afiliado recebe links unicos para rastrear vendas</p></div>
+          <div class="affiliate-feature"><i class="fas fa-chart-line"></i><h4>Painel Completo</h4><p>Acompanhe cliques, vendas e comissoes em tempo real</p></div>
+          <div class="affiliate-feature"><i class="fas fa-money-bill-wave"></i><h4>Pagamento Rapido</h4><p>Saque suas comissoes via PIX, PayPal ou transferencia</p></div>
+          <div class="affiliate-feature"><i class="fas fa-headset"></i><h4>Suporte 24/7</h4><p>Equipe dedicada para ajudar voce a vender mais</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Como Funciona</h2>
+        <p>Tres passos simples para comecar a ganhar como afiliado</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-number">1</div><h4>Cadastre-se</h4><p>Crie sua conta gratuita como afiliado em menos de 2 minutos</p></div>
+        <div class="step"><div class="step-number">2</div><h4>Compartilhe</h4><p>Divulgue seus links personalizados nas redes sociais</p></div>
+        <div class="step"><div class="step-number">3</div><h4>Ganhe</h4><p>Receba comissoes por cada venda realizada</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <h2>O que Dizem Nossos Afiliados</h2>
+        <p>Historias reais de pessoas que transformaram sua renda com nossa plataforma</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">MC</div>
+            <div><div class="testimonial-name">Maria Clara</div><div class="testimonial-role">Criadora de Conteudo</div><span class="testimonial-earnings">R$ 15.420/mes</span></div>
+          </div>
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p>"Comecei como afiliada ha 6 meses e ja consigo pagar todas as minhas contas apenas com as comissoes. O painel e incrivel e os pagamentos sao sempre pontuais!"</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">RL</div>
+            <div><div class="testimonial-name">Ricardo Lima</div><div class="testimonial-role">Empreendedor Digital</div><span class="testimonial-earnings">R$ 8.350/mes</span></div>
+          </div>
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p>"A qualidade dos cursos e excelente, o que facilita muito as vendas. Meus seguidores adoram e eu ganho comissoes generosas. Melhor plataforma que ja usei!"</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">AS</div>
+            <div><div class="testimonial-name">Ana Souza</div><div class="testimonial-role">Estudante Universitaria</div><span class="testimonial-earnings">R$ 3.200/mes</span></div>
+          </div>
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+          <p>"Sou estudante e o dinheiro das comissoes me ajuda muito com as despesas da faculdade. Consigo conciliar com os estudos e ainda sobra tempo livre!"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== COURSES PAGE ===== -->
+<div id="page-courses" class="page">
+  <div style="background:var(--dark);color:var(--white);padding:120px 2rem 60px;">
+    <div class="container">
+      <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Todos os Cursos</h1>
+      <p style="color:#94a3b8;font-size:1.1rem;">Escolha entre centenas de cursos e comece sua jornada de aprendizado</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="courseSearch" placeholder="Buscar cursos..." onkeyup="filterCourses()">
+      </div>
+      <div class="filter-tags" id="courseFilters">
+        <button class="filter-tag active" onclick="filterByCategory('all')">Todos</button>
+        <button class="filter-tag" onclick="filterByCategory('programacao')">Programacao</button>
+        <button class="filter-tag" onclick="filterByCategory('marketing')">Marketing</button>
+        <button class="filter-tag" onclick="filterByCategory('design')">Design</button>
+        <button class="filter-tag" onclick="filterByCategory('negocios')">Negocios</button>
+        <button class="filter-tag" onclick="filterByCategory('idiomas')">Idiomas</button>
+        <button class="filter-tag" onclick="filterByCategory('financas')">Financas</button>
+      </div>
+      <div class="courses-grid" id="allCourses"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COURSE DETAIL PAGE ===== -->
+<div id="page-course-detail" class="page">
+  <div class="course-detail-hero">
+    <div class="course-detail-grid" id="courseDetailContent"></div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="grid-2" id="courseDetailBottom">
+        <div>
+          <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;">Conteudo do Curso</h2>
+          <div class="lessons-list" id="courseLessons"></div>
+        </div>
+        <div>
+          <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;">Instrutor</h2>
+          <div id="courseInstructor"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MY COURSES PAGE ===== -->
+<div id="page-my-courses" class="page">
+  <div style="background:var(--dark);color:var(--white);padding:120px 2rem 60px;">
+    <div class="container">
+      <h1 style="font-size:2.5rem;font-weight:900;margin-bottom:1rem;">Meus Cursos</h1>
+      <p style="color:#94a3b8;font-size:1.1rem;">Continue de onde parou e avance no seu aprendizado</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="courses-grid" id="myCoursesGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div id="page-login" class="page">
+  <div class="auth-container">
+    <div class="auth-box fade-in">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div class="logo" style="justify-content:center;font-size:2rem;"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      </div>
+      <h2>Bem-vindo de volta!</h2>
+      <p>Entre na sua conta para continuar</p>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Senha</label>
+          <input type="password" id="loginPassword" placeholder="********" required>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;font-size:0.9rem;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:400;"><input type="checkbox" style="width:auto;"> Lembrar-me</label>
+          <a href="#" style="color:var(--primary);text-decoration:none;font-weight:600;">Esqueceu a senha?</a>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+      </form>
+      <div class="auth-footer">Nao tem uma conta? <a href="#" onclick="showPage('register')">Cadastre-se</a></div>
+      <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-light);">
+        <p style="text-align:center;color:var(--gray);font-size:0.85rem;margin-bottom:1rem;">Contas de demonstracao:</p>
+        <div style="display:grid;gap:0.5rem;">
+          <button class="btn btn-ghost" style="justify-content:center;font-size:0.85rem;" onclick="demoLogin('aluno')"><i class="fas fa-user-graduate"></i> Entrar como Aluno</button>
+          <button class="btn btn-ghost" style="justify-content:center;font-size:0.85rem;" onclick="demoLogin('afiliado')"><i class="fas fa-handshake"></i> Entrar como Afiliado</button>
+          <button class="btn btn-ghost" style="justify-content:center;font-size:0.85rem;" onclick="demoLogin('admin')"><i class="fas fa-shield-alt"></i> Entrar como Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGISTER PAGE ===== -->
+<div id="page-register" class="page">
+  <div class="auth-container">
+    <div class="auth-box fade-in">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div class="logo" style="justify-content:center;font-size:2rem;"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      </div>
+      <h2>Criar Conta</h2>
+      <p>Escolha como quer comecar</p>
+      <div class="role-selector">
+        <div class="role-option selected" onclick="selectRole(this, 'student')" id="roleStudent">
+          <i class="fas fa-user-graduate"></i><span>Aluno</span>
+          <p style="font-size:0.8rem;color:var(--gray);margin-top:0.5rem;font-weight:400;">Quero aprender</p>
+        </div>
+        <div class="role-option" onclick="selectRole(this, 'affiliate')" id="roleAffiliate">
+          <i class="fas fa-handshake"></i><span>Afiliado</span>
+          <p style="font-size:0.8rem;color:var(--gray);margin-top:0.5rem;font-weight:400;">Quero vender e ganhar</p>
+        </div>
+      </div>
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group"><label><i class="fas fa-user"></i> Nome Completo</label><input type="text" id="regName" placeholder="Seu nome" required></div>
+        <div class="form-group"><label><i class="fas fa-envelope"></i> Email</label><input type="email" id="regEmail" placeholder="seu@email.com" required></div>
+        <div class="form-group"><label><i class="fas fa-phone"></i> WhatsApp</label><input type="tel" id="regPhone" placeholder="(11) 99999-9999"></div>
+        <div class="form-group"><label><i class="fas fa-lock"></i> Senha</label><input type="password" id="regPassword" placeholder="Minimo 8 caracteres" required></div>
+        <div class="form-group"><label><i class="fas fa-lock"></i> Confirmar Senha</label><input type="password" id="regConfirmPassword" placeholder="Repita a senha" required></div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Criar Conta</button>
+      </form>
+      <div class="auth-footer">Ja tem uma conta? <a href="#" onclick="showPage('login')">Entrar</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STUDENT DASHBOARD ===== -->
+<div id="page-student-dashboard" class="page">
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active" onclick="showStudentTab('overview')"><i class="fas fa-home"></i> Visao Geral</a></li>
+        <li><a href="#" onclick="showStudentTab('my-courses')"><i class="fas fa-book"></i> Meus Cursos</a></li>
+        <li><a href="#" onclick="showStudentTab('certificates')"><i class="fas fa-certificate"></i> Certificados</a></li>
+        <li><a href="#" onclick="showStudentTab('settings')"><i class="fas fa-cog"></i> Configuracoes</a></li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <ul class="sidebar-menu">
+        <li><a href="#" onclick="showPage('affiliate-dashboard')" id="becomeAffiliateLink"><i class="fas fa-handshake"></i> Virar Afiliado</a></li>
+        <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+      </ul>
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="studentAvatar">AL</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="studentName">Aluno</div>
+          <div class="sidebar-user-role">Estudante</div>
+        </div>
+      </div>
+    </aside>
+    <main class="main-content" id="studentMainContent">
+      <!-- Overview Tab -->
+      <div id="student-tab-overview">
+        <div class="page-header">
+          <div><div class="breadcrumb">Dashboard / Visao Geral</div><h1>Ola, <span id="studentWelcomeName">Aluno</span>!</h1></div>
+          <button class="btn btn-primary" onclick="showPage('courses')"><i class="fas fa-plus"></i> Novo Curso</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card purple">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-book-open"></i></div></div>
+            <div class="stat-card-value" id="studentStatCourses">0</div><div class="stat-card-label">Cursos Matriculados</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-clock"></i></div></div>
+            <div class="stat-card-value" id="studentStatHours">0h</div><div class="stat-card-label">Horas de Estudo</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-certificate"></i></div></div>
+            <div class="stat-card-value" id="studentStatCertificates">0</div><div class="stat-card-label">Certificados</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-chart-line"></i></div></div>
+            <div class="stat-card-value" id="studentStatProgress">0%</div><div class="stat-card-label">Progresso Medio</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-header"><h3>Progresso Semanal</h3><span class="badge badge-primary">Ultimos 7 dias</span></div>
+            <div class="chart-bar">
+              <div class="chart-bar-item" style="height:40%" data-value="2h"></div>
+              <div class="chart-bar-item" style="height:65%" data-value="4h"></div>
+              <div class="chart-bar-item" style="height:30%" data-value="1.5h"></div>
+              <div class="chart-bar-item" style="height:80%" data-value="5h"></div>
+              <div class="chart-bar-item" style="height:55%" data-value="3h"></div>
+              <div class="chart-bar-item" style="height:90%" data-value="6h"></div>
+              <div class="chart-bar-item" style="height:70%" data-value="4.5h"></div>
+            </div>
+            <div class="chart-labels">
+              <div class="chart-label">Seg</div><div class="chart-label">Ter</div><div class="chart-label">Qua</div>
+              <div class="chart-label">Qui</div><div class="chart-label">Sex</div><div class="chart-label">Sab</div><div class="chart-label">Dom</div>
+            </div>
+          </div>
+          <div class="data-table">
+            <div class="table-header"><h3>Continue Assistindo</h3><a href="#" onclick="showStudentTab('my-courses')" style="color:var(--primary);text-decoration:none;font-weight:600;">Ver todos</a></div>
+            <table id="continueWatchingTable">
+              <thead><tr><th>Curso</th><th>Progresso</th><th>Acao</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- My Courses Tab -->
+      <div id="student-tab-my-courses" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Dashboard / Meus Cursos</div><h1>Meus Cursos</h1></div>
+        </div>
+        <div class="courses-grid" id="studentCoursesGrid"></div>
+      </div>
+      <!-- Certificates Tab -->
+      <div id="student-tab-certificates" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Dashboard / Certificados</div><h1>Meus Certificados</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Certificados Obtidos</h3></div>
+          <table id="certificatesTable">
+            <thead><tr><th>Curso</th><th>Data de Conclusao</th><th>Nota</th><th>Acao</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Settings Tab -->
+      <div id="student-tab-settings" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Dashboard / Configuracoes</div><h1>Configuracoes</h1></div>
+        </div>
+        <div class="admin-course-form">
+          <h3 style="margin-bottom:1.5rem;">Informacoes Pessoais</h3>
+          <div class="form-grid">
+            <div class="form-group"><label>Nome Completo</label><input type="text" id="settingsName" value=""></div>
+            <div class="form-group"><label>Email</label><input type="email" id="settingsEmail" value=""></div>
+            <div class="form-group"><label>Telefone</label><input type="tel" id="settingsPhone" value=""></div>
+            <div class="form-group"><label>Cidade</label><input type="text" id="settingsCity" value=""></div>
+          </div>
+          <div class="form-group" style="margin-top:1rem;"><label>Bio</label><textarea id="settingsBio" rows="3"></textarea></div>
+          <button class="btn btn-primary" onclick="saveSettings()" style="margin-top:1rem;"><i class="fas fa-save"></i> Salvar Alteracoes</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== AFFILIATE DASHBOARD ===== -->
+<div id="page-affiliate-dashboard" class="page">
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active" onclick="showAffiliateTab('overview')"><i class="fas fa-home"></i> Visao Geral</a></li>
+        <li><a href="#" onclick="showAffiliateTab('links')"><i class="fas fa-link"></i> Meus Links</a></li>
+        <li><a href="#" onclick="showAffiliateTab('sales')"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
+        <li><a href="#" onclick="showAffiliateTab('withdrawal')"><i class="fas fa-money-bill-wave"></i> Saques</a></li>
+        <li><a href="#" onclick="showAffiliateTab('settings')"><i class="fas fa-cog"></i> Configuracoes</a></li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <ul class="sidebar-menu">
+        <li><a href="#" onclick="showPage('student-dashboard')"><i class="fas fa-user-graduate"></i> Area do Aluno</a></li>
+        <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+      </ul>
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="affiliateAvatar">AF</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="affiliateName">Afiliado</div>
+          <div class="sidebar-user-role">Afiliado</div>
+        </div>
+      </div>
+    </aside>
+    <main class="main-content" id="affiliateMainContent">
+      <!-- Overview Tab -->
+      <div id="affiliate-tab-overview">
+        <div class="page-header">
+          <div><div class="breadcrumb">Afiliado / Visao Geral</div><h1>Painel do Afiliado</h1></div>
+          <button class="btn btn-success" onclick="showAffiliateTab('withdrawal')"><i class="fas fa-money-bill-wave"></i> Solicitar Saque</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card purple">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-wallet"></i></div><span class="stat-card-trend trend-up">+12%</span></div>
+            <div class="stat-card-value" id="affiliateBalance">R$ 0,00</div><div class="stat-card-label">Saldo Disponivel</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-shopping-cart"></i></div><span class="stat-card-trend trend-up">+8%</span></div>
+            <div class="stat-card-value" id="affiliateSales">0</div><div class="stat-card-label">Vendas Totais</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-mouse-pointer"></i></div><span class="stat-card-trend trend-up">+23%</span></div>
+            <div class="stat-card-value" id="affiliateClicks">0</div><div class="stat-card-label">Cliques no Link</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-percentage"></i></div></div>
+            <div class="stat-card-value" id="affiliateConversion">0%</div><div class="stat-card-label">Taxa de Conversao</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-header"><h3>Vendas dos Ultimos 7 Dias</h3><span class="badge badge-success">R$ <span id="weeklyEarnings">0</span></span></div>
+            <div class="chart-bar" id="affiliateChart">
+              <div class="chart-bar-item" style="height:30%" data-value="R$150"></div>
+              <div class="chart-bar-item" style="height:55%" data-value="R$320"></div>
+              <div class="chart-bar-item" style="height:40%" data-value="R$210"></div>
+              <div class="chart-bar-item" style="height:75%" data-value="R$480"></div>
+              <div class="chart-bar-item" style="height:60%" data-value="R$350"></div>
+              <div class="chart-bar-item" style="height:85%" data-value="R$520"></div>
+              <div class="chart-bar-item" style="height:70%" data-value="R$410"></div>
+            </div>
+            <div class="chart-labels">
+              <div class="chart-label">Seg</div><div class="chart-label">Ter</div><div class="chart-label">Qua</div>
+              <div class="chart-label">Qui</div><div class="chart-label">Sex</div><div class="chart-label">Sab</div><div class="chart-label">Dom</div>
+            </div>
+          </div>
+          <div class="data-table">
+            <div class="table-header"><h3>Ultimas Vendas</h3><a href="#" onclick="showAffiliateTab('sales')" style="color:var(--primary);text-decoration:none;font-weight:600;">Ver todas</a></div>
+            <table id="recentSalesTable">
+              <thead><tr><th>Curso</th><th>Comprador</th><th>Valor</th><th>Comissao</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Links Tab -->
+      <div id="affiliate-tab-links" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Afiliado / Meus Links</div><h1>Links de Afiliado</h1></div>
+        </div>
+        <div id="affiliateLinksContainer"></div>
+      </div>
+      <!-- Sales Tab -->
+      <div id="affiliate-tab-sales" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Afiliado / Vendas</div><h1>Historico de Vendas</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Todas as Vendas</h3></div>
+          <table id="allSalesTable">
+            <thead><tr><th>Data</th><th>Curso</th><th>Comprador</th><th>Valor</th><th>Comissao</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Withdrawal Tab -->
+      <div id="affiliate-tab-withdrawal" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Afiliado / Saques</div><h1>Solicitar Saque</h1></div>
+        </div>
+        <div class="grid-2">
+          <div class="withdrawal-card">
+            <h3 style="margin-bottom:1rem;">Saldo Disponivel</h3>
+            <div class="withdrawal-balance" id="withdrawalBalance">R$ 0,00</div>
+            <div class="withdrawal-balance-label">Voce pode sacar quando atingir R$ 50,00</div>
+            <h4 style="margin:1.5rem 0 1rem;">Metodo de Saque</h4>
+            <div class="withdrawal-methods">
+              <div class="withdrawal-method selected" onclick="selectWithdrawalMethod(this, 'pix')">
+                <i class="fas fa-qrcode" style="color:var(--primary)"></i><span>PIX</span>
+              </div>
+              <div class="withdrawal-method" onclick="selectWithdrawalMethod(this, 'paypal')">
+                <i class="fab fa-paypal" style="color:#003087"></i><span>PayPal</span>
+              </div>
+              <div class="withdrawal-method" onclick="selectWithdrawalMethod(this, 'bank')">
+                <i class="fas fa-university" style="color:var(--secondary)"></i><span>Transferencia</span>
+              </div>
+            </div>
+            <div class="form-group"><label>Chave PIX / Conta</label><input type="text" id="withdrawalKey" placeholder="Digite sua chave PIX"></div>
+            <div class="form-group"><label>Valor do Saque (R$)</label><input type="number" id="withdrawalAmount" placeholder="0,00" min="50" step="0.01"></div>
+            <button class="btn btn-success" onclick="requestWithdrawal()" style="width:100%;justify-content:center;"><i class="fas fa-paper-plane"></i> Solicitar Saque</button>
+          </div>
+          <div class="data-table">
+            <div class="table-header"><h3>Historico de Saques</h3></div>
+            <table id="withdrawalHistoryTable">
+              <thead><tr><th>Data</th><th>Valor</th><th>Metodo</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Settings Tab -->
+      <div id="affiliate-tab-settings" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Afiliado / Configuracoes</div><h1>Configuracoes</h1></div>
+        </div>
+        <div class="admin-course-form">
+          <h3 style="margin-bottom:1.5rem;">Informacoes do Afiliado</h3>
+          <div class="form-grid">
+            <div class="form-group"><label>Nome Completo</label><input type="text" id="affSettingsName"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="affSettingsEmail"></div>
+            <div class="form-group"><label>WhatsApp</label><input type="tel" id="affSettingsPhone"></div>
+            <div class="form-group"><label>CPF/CNPJ</label><input type="text" id="affSettingsDoc"></div>
+          </div>
+          <div class="form-group" style="margin-top:1rem;"><label>Chave PIX</label><input type="text" id="affSettingsPix"></div>
+          <button class="btn btn-primary" onclick="saveAffiliateSettings()" style="margin-top:1rem;"><i class="fas fa-save"></i> Salvar Alteracoes</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== ADMIN DASHBOARD ===== -->
+<div id="page-admin-dashboard" class="page">
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active" onclick="showAdminTab('overview')"><i class="fas fa-home"></i> Visao Geral</a></li>
+        <li><a href="#" onclick="showAdminTab('courses')"><i class="fas fa-book"></i> Cursos</a></li>
+        <li><a href="#" onclick="showAdminTab('students')"><i class="fas fa-users"></i> Alunos</a></li>
+        <li><a href="#" onclick="showAdminTab('affiliates')"><i class="fas fa-handshake"></i> Afiliados</a></li>
+        <li><a href="#" onclick="showAdminTab('sales')"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
+        <li><a href="#" onclick="showAdminTab('withdrawals')"><i class="fas fa-money-bill-wave"></i> Saques</a></li>
+        <li><a href="#" onclick="showAdminTab('settings')"><i class="fas fa-cog"></i> Configuracoes</a></li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <ul class="sidebar-menu">
+        <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+      </ul>
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="adminAvatar">AD</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="adminName">Admin</div>
+          <div class="sidebar-user-role">Administrador</div>
+        </div>
+      </div>
+    </aside>
+    <main class="main-content" id="adminMainContent">
+      <!-- Overview Tab -->
+      <div id="admin-tab-overview">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Visao Geral</div><h1>Painel Administrativo</h1></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card purple">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-wallet"></i></div><span class="stat-card-trend trend-up">+15%</span></div>
+            <div class="stat-card-value" id="adminRevenue">R$ 0,00</div><div class="stat-card-label">Receita Total</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-shopping-cart"></i></div><span class="stat-card-trend trend-up">+10%</span></div>
+            <div class="stat-card-value" id="adminSales">0</div><div class="stat-card-label">Vendas Totais</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-users"></i></div><span class="stat-card-trend trend-up">+5%</span></div>
+            <div class="stat-card-value" id="adminStudents">0</div><div class="stat-card-label">Alunos</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-handshake"></i></div><span class="stat-card-trend trend-up">+12%</span></div>
+            <div class="stat-card-value" id="adminAffiliates">0</div><div class="stat-card-label">Afiliados</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-header"><h3>Receita Semanal</h3><span class="badge badge-primary">R$ <span id="adminWeeklyRevenue">0</span></span></div>
+            <div class="chart-bar">
+              <div class="chart-bar-item" style="height:45%" data-value="R$2.4k"></div>
+              <div class="chart-bar-item" style="height:60%" data-value="R$3.2k"></div>
+              <div class="chart-bar-item" style="height:35%" data-value="R$1.8k"></div>
+              <div class="chart-bar-item" style="height:80%" data-value="R$4.5k"></div>
+              <div class="chart-bar-item" style="height:70%" data-value="R$3.8k"></div>
+              <div class="chart-bar-item" style="height:90%" data-value="R$5.2k"></div>
+              <div class="chart-bar-item" style="height:75%" data-value="R$4.1k"></div>
+            </div>
+            <div class="chart-labels">
+              <div class="chart-label">Seg</div><div class="chart-label">Ter</div><div class="chart-label">Qua</div>
+              <div class="chart-label">Qui</div><div class="chart-label">Sex</div><div class="chart-label">Sab</div><div class="chart-label">Dom</div>
+            </div>
+          </div>
+          <div class="data-table">
+            <div class="table-header"><h3>Ultimas Vendas</h3><a href="#" onclick="showAdminTab('sales')" style="color:var(--primary);text-decoration:none;font-weight:600;">Ver todas</a></div>
+            <table id="adminRecentSalesTable">
+              <thead><tr><th>Curso</th><th>Aluno</th><th>Valor</th><th>Data</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Courses Tab -->
+      <div id="admin-tab-courses" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Cursos</div><h1>Gerenciar Cursos</h1></div>
+          <button class="btn btn-primary" onclick="openAddCourseModal()"><i class="fas fa-plus"></i> Novo Curso</button>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Todos os Cursos</h3></div>
+          <table id="adminCoursesTable">
+            <thead><tr><th>Curso</th><th>Categoria</th><th>Preco</th><th>Alunos</th><th>Comissao</th><th>Status</th><th>Acoes</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Students Tab -->
+      <div id="admin-tab-students" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Alunos</div><h1>Gerenciar Alunos</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Todos os Alunos</h3></div>
+          <table id="adminStudentsTable">
+            <thead><tr><th>Aluno</th><th>Email</th><th>Cursos</th><th>Progresso</th><th>Status</th><th>Acoes</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Affiliates Tab -->
+      <div id="admin-tab-affiliates" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Afiliados</div><h1>Gerenciar Afiliados</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Todos os Afiliados</h3></div>
+          <table id="adminAffiliatesTable">
+            <thead><tr><th>Afiliado</th><th>Email</th><th>Vendas</th><th>Comissoes</th><th>Saldo</th><th>Status</th><th>Acoes</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Sales Tab -->
+      <div id="admin-tab-sales" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Vendas</div><h1>Historico de Vendas</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Todas as Vendas</h3></div>
+          <table id="adminAllSalesTable">
+            <thead><tr><th>Data</th><th>Curso</th><th>Aluno</th><th>Afiliado</th><th>Valor</th><th>Comissao</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Withdrawals Tab -->
+      <div id="admin-tab-withdrawals" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Saques</div><h1>Solicitacoes de Saque</h1></div>
+        </div>
+        <div class="data-table">
+          <div class="table-header"><h3>Saques Pendentes</h3></div>
+          <table id="adminWithdrawalsTable">
+            <thead><tr><th>Data</th><th>Afiliado</th><th>Valor</th><th>Metodo</th><th>Chave</th><th>Status</th><th>Acoes</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Settings Tab -->
+      <div id="admin-tab-settings" style="display:none;">
+        <div class="page-header">
+          <div><div class="breadcrumb">Admin / Configuracoes</div><h1>Configuracoes da Plataforma</h1></div>
+        </div>
+        <div class="admin-course-form">
+          <h3 style="margin-bottom:1.5rem;">Configuracoes Gerais</h3>
+          <div class="form-grid">
+            <div class="form-group"><label>Nome da Plataforma</label><input type="text" value="EduAfiliados"></div>
+            <div class="form-group"><label>Email de Contato</label><input type="email" value="contato@eduafiliados.com"></div>
+            <div class="form-group"><label>Taxa de Comissao Padrao (%)</label><input type="number" value="30" min="0" max="100"></div>
+            <div class="form-group"><label>Valor Minimo de Saque (R$)</label><input type="number" value="50" min="1"></div>
+          </div>
+          <button class="btn btn-primary" onclick="showToast('Configuracoes salvas com sucesso!', 'success')" style="margin-top:1rem;"><i class="fas fa-save"></i> Salvar Configuracoes</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="modalTitle">Titulo</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="mainFooter">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="font-size:1.5rem;"><i class="fas fa-graduation-cap"></i> EduAfiliados</div>
+      <p>A melhor plataforma de cursos online com sistema de afiliados do Brasil. Aprenda, ensine e ganhe.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div>
+      <h4>Plataforma</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="showPage('courses')">Cursos</a></li>
+        <li><a href="#" onclick="showPage('affiliate')">Afiliados</a></li>
+        <li><a href="#">Precos</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Suporte</h4>
+      <ul class="footer-links">
+        <li><a href="#">Central de Ajuda</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Politica de Privacidade</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contato</h4>
+      <ul class="footer-links">
+        <li><a href="#"><i class="fas fa-envelope"></i> contato@eduafiliados.com</a></li>
+        <li><a href="#"><i class="fas fa-phone"></i> (11) 99999-9999</a></li>
+        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Sao Paulo, SP</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 EduAfiliados. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+// ===== DADOS =====
+const courses = [
+  { id: 1, title: "Python do Zero ao Avancado", category: "programacao", instructor: "Carlos Silva", duration: "40h", lessons: 120, students: 3450, price: 297, oldPrice: 597, commission: "40%", rating: 4.8, image: "fa-python", featured: true, description: "Aprenda Python desde o basico ate projetos avancados com Django e Inteligencia Artificial." },
+  { id: 2, title: "Marketing Digital Completo", category: "marketing", instructor: "Ana Paula", duration: "35h", lessons: 95, students: 5200, price: 197, oldPrice: 397, commission: "50%", rating: 4.9, image: "fa-bullhorn", featured: true, description: "Domine estrategias de marketing digital, SEO, redes sociais e anuncios pagos." },
+  { id: 3, title: "Design UI/UX Profissional", category: "design", instructor: "Fernanda Lima", duration: "30h", lessons: 80, students: 2800, price: 247, oldPrice: 497, commission: "35%", rating: 4.7, image: "fa-paint-brush", featured: true, description: "Crie interfaces incríveis com Figma e aprenda os fundamentos de UX Design." },
+  { id: 4, title: "JavaScript Moderno ES6+", category: "programacao", instructor: "Pedro Costa", duration: "45h", lessons: 140, students: 4100, price: 347, oldPrice: 697, commission: "40%", rating: 4.8, image: "fa-js", featured: false, description: "Domine JavaScript moderno, React, Node.js e crie aplicacoes web completas." },
+  { id: 5, title: "Copywriting que Vende", category: "marketing", instructor: "Roberto Almeida", duration: "20h", lessons: 60, students: 1900, price: 147, oldPrice: 297, commission: "50%", rating: 4.6, image: "fa-pen-fancy", featured: false, description: "Aprenda a escrever textos persuasivos que convertem visitantes em clientes." },
+  { id: 6, title: "Excel Avancado e Power BI", category: "negocios", instructor: "Juliana Martins", duration: "25h", lessons: 70, students: 6200, price: 197, oldPrice: 397, commission: "30%", rating: 4.9, image: "fa-chart-bar", featured: true, description: "Domine Excel avancado, macros, VBA e crie dashboards profissionais no Power BI." },
+  { id: 7, title: "Ingles para Negocios", category: "idiomas", instructor: "Michael Brown", duration: "50h", lessons: 150, students: 3800, price: 297, oldPrice: 597, commission: "35%", rating: 4.7, image: "fa-language", featured: false, description: "Aprenda ingles focado em situacoes de negocios e comunicacao profissional." },
+  { id: 8, title: "Investimentos e Financas", category: "financas", instructor: "Ricardo Mendes", duration: "28h", lessons: 85, students: 4500, price: 247, oldPrice: 497, commission: "45%", rating: 4.8, image: "fa-chart-line", featured: false, description: "Aprenda a investir na Bolsa, criptomoedas e construir patrimonio de forma inteligente." },
+  { id: 9, title: "Photoshop do Zero ao Pro", category: "design", instructor: "Camila Rocha", duration: "32h", lessons: 90, students: 3100, price: 197, oldPrice: 397, commission: "35%", rating: 4.6, image: "fa-image", featured: false, description: "Edicao de imagens profissional, manipulacao fotografica e design grafico." },
+  { id: 10, title: "Gestao de Projetos Agile", category: "negocios", instructor: "Thiago Oliveira", duration: "22h", lessons: 65, students: 2200, price: 247, oldPrice: 497, commission: "30%", rating: 4.7, image: "fa-tasks", featured: false, description: "Aprenda Scrum, Kanban e metodologias ageis para gerenciar projetos de sucesso." },
+  { id: 11, title: "Espanhol Basico ao Avancado", category: "idiomas", instructor: "Maria Garcia", duration: "45h", lessons: 130, students: 2600, price: 247, oldPrice: 497, commission: "35%", rating: 4.5, image: "fa-globe", featured: false, description: "Do basico ate a fluencia em espanhol com metodologia imersiva." },
+  { id: 12, title: "Trading e Day Trade", category: "financas", instructor: "Lucas Ferreira", duration: "35h", lessons: 100, students: 5400, price: 397, oldPrice: 797, commission: "45%", rating: 4.4, image: "fa-coins", featured: false, description: "Estrategias de trading, analise tecnica e gestao de risco no mercado financeiro." }
+];
+
+const lessons = [
+  { id: 1, courseId: 1, title: "Introducao ao Python", duration: "15:30", completed: true },
+  { id: 2, courseId: 1, title: "Variaveis e Tipos de Dados", duration: "22:45", completed: true },
+  { id: 3, courseId: 1, title: "Estruturas Condicionais", duration: "18:20", completed: true },
+  { id: 4, courseId: 1, title: "Loops e Iteracoes", duration: "25:10", completed: false },
+  { id: 5, courseId: 1, title: "Funcoes e Modulos", duration: "30:00", completed: false },
+  { id: 6, courseId: 1, title: "Orientacao a Objetos", duration: "35:15", completed: false },
+  { id: 7, courseId: 1, title: "Trabalhando com Arquivos", duration: "20:45", completed: false },
+  { id: 8, courseId: 1, title: "Banco de Dados com Python", duration: "40:00", completed: false }
+];
+
+const sales = [
+  { id: 1, course: "Python do Zero ao Avancado", buyer: "Joao Silva", affiliate: "Maria Clara", value: 297, commission: 118.80, date: "2024-05-28", status: "completed" },
+  { id: 2, course: "Marketing Digital Completo", buyer: "Ana Paula", affiliate: "Ricardo Lima", value: 197, commission: 98.50, date: "2024-05-27", status: "completed" },
+  { id: 3, course: "Design UI/UX Profissional", buyer: "Fernanda Lima", affiliate: "Maria Clara", value: 247, commission: 86.45, date: "2024-05-27", status: "completed" },
+  { id: 4, course: "JavaScript Moderno ES6+", buyer: "Pedro Costa", affiliate: "Ana Souza", value: 347, commission: 138.80, date: "2024-05-26", status: "completed" },
+  { id: 5, course: "Copywriting que Vende", buyer: "Roberto Almeida", affiliate: "Ricardo Lima", value: 147, commission: 73.50, date: "2024-05-26", status: "completed" },
+  { id: 6, course: "Excel Avancado e Power BI", buyer: "Juliana Martins", affiliate: "Maria Clara", value: 197, commission: 59.10, date: "2024-05-25", status: "completed" },
+  { id: 7, course: "Investimentos e Financas", buyer: "Ricardo Mendes", affiliate: "Ana Souza", value: 247, commission: 111.15, date: "2024-05-25", status: "completed" },
+  { id: 8, course: "Python do Zero ao Avancado", buyer: "Carlos Eduardo", affiliate: "Ricardo Lima", value: 297, commission: 118.80, date: "2024-05-24", status: "completed" }
+];
+
+const withdrawals = [
+  { id: 1, affiliate: "Maria Clara", value: 1500.00, method: "PIX", key: "maria@email.com", date: "2024-05-28", status: "completed" },
+  { id: 2, affiliate: "Ricardo Lima", value: 890.50, method: "PIX", key: "ricardo@email.com", date: "2024-05-27", status: "completed" },
+  { id: 3, affiliate: "Ana Souza", value: 450.00, method: "PayPal", key: "ana@email.com", date: "2024-05-26", status: "pending" },
+  { id: 4, affiliate: "Maria Clara", value: 2100.00, method: "Transferencia", key: "1234-5", date: "2024-05-20", status: "completed" }
+];
+
+const students = [
+  { id: 1, name: "Joao Silva", email: "joao@email.com", courses: 3, progress: 65, status: "active" },
+  { id: 2, name: "Ana Paula", email: "ana@email.com", courses: 5, progress: 82, status: "active" },
+  { id: 3, name: "Pedro Costa", email: "pedro@email.com", courses: 2, progress: 45, status: "active" },
+  { id: 4, name: "Fernanda Lima", email: "fernanda@email.com", courses: 4, progress: 90, status: "active" },
+  { id: 5, name: "Carlos Eduardo", email: "carlos@email.com", courses: 1, progress: 30, status: "active" }
+];
+
+const affiliates = [
+  { id: 1, name: "Maria Clara", email: "maria@email.com", sales: 45, commissions: 5240.50, balance: 15420.00, status: "active" },
+  { id: 2, name: "Ricardo Lima", email: "ricardo@email.com", sales: 32, commissions: 3890.20, balance: 8350.00, status: "active" },
+  { id: 3, name: "Ana Souza", email: "ana@email.com", sales: 18, commissions: 2100.00, balance: 3200.00, status: "active" },
+  { id: 4, name: "Bruno Ferreira", email: "bruno@email.com", sales: 12, commissions: 1450.00, balance: 2100.00, status: "active" }
+];
+
+let currentUser = null;
+let selectedRole = 'student';
+let selectedWithdrawalMethod = 'pix';
+let currentCategory = 'all';
+
+// ===== INICIALIZACAO =====
+document.addEventListener('DOMContentLoaded', function() {
+  renderFeaturedCourses();
+  renderAllCourses();
+  updateNavForGuest();
+});
+
+// ===== NAVEGACAO =====
+function showPage(pageName) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageName)?.classList.add('active');
+
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (pageName === 'home') document.querySelector('.nav-links a[onclick*="home"]')?.classList.add('active');
+
+  window.scrollTo(0, 0);
+
+  if (pageName === 'courses') renderAllCourses();
+  if (pageName === 'student-dashboard') loadStudentDashboard();
+  if (pageName === 'affiliate-dashboard') loadAffiliateDashboard();
+  if (pageName === 'admin-dashboard') loadAdminDashboard();
+}
+
+function updateNavForGuest() {
+  document.getElementById('navActions').innerHTML = `
+    <button class="btn btn-secondary btn-sm" onclick="showPage('login')">Entrar</button>
+    <button class="btn btn-primary btn-sm" onclick="showPage('register')">Cadastrar</button>
+  `;
+}
+
+function updateNavForUser() {
+  const name = currentUser?.name || 'Usuario';
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  document.getElementById('navActions').innerHTML = `
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <div style="display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="showUserMenu()">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.8rem;">${initials}</div>
+        <span style="font-weight:600;font-size:0.9rem;">${name}</span>
+        <i class="fas fa-chevron-down" style="font-size:0.7rem;color:var(--gray);"></i>
+      </div>
+    </div>
+  `;
+}
+
+function showUserMenu() {
+  if (currentUser?.role === 'admin') showPage('admin-dashboard');
+  else if (currentUser?.role === 'affiliate') showPage('affiliate-dashboard');
+  else showPage('student-dashboard');
+}
+
+// ===== RENDER COURSES =====
+function renderFeaturedCourses() {
+  const container = document.getElementById('featuredCourses');
+  const featured = courses.filter(c => c.featured);
+  container.innerHTML = featured.map(course => createCourseCard(course)).join('');
+}
+
+function renderAllCourses() {
+  const container = document.getElementById('allCourses');
+  const search = document.getElementById('courseSearch')?.value?.toLowerCase() || '';
+  let filtered = courses;
+
+  if (currentCategory !== 'all') {
+    filtered = filtered.filter(c => c.category === currentCategory);
+  }
+  if (search) {
+    filtered = filtered.filter(c => c.title.toLowerCase().includes(search) || c.category.toLowerCase().includes(search));
+  }
+
+  container.innerHTML = filtered.map(course => createCourseCard(course)).join('');
+}
+
+function createCourseCard(course) {
+  const commissionBadge = currentUser?.role === 'affiliate' 
+    ? `<span class="course-commission">${course.commission}</span>` 
+    : '';
+  return `
+    <div class="course-card" onclick="showCourseDetail(${course.id})">
+      <div class="course-image"><i class="fab ${course.image}"></i><span class="course-badge">${course.rating} <i class="fas fa-star" style="font-size:0.7rem;"></i></span></div>
+      <div class="course-content">
+        <div class="course-category">${course.category}</div>
+        <div class="course-title">${course.title}</div>
+        <div class="course-meta"><span><i class="fas fa-user"></i> ${course.instructor}</span><span><i class="fas fa-clock"></i> ${course.duration}</span><span><i class="fas fa-play-circle"></i> ${course.lessons} aulas</span></div>
+        <div class="course-footer">
+          <div class="course-price">R$ ${course.price}<span class="old">R$ ${course.oldPrice}</span></div>
+          ${commissionBadge}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function filterByCategory(category) {
+  currentCategory = category;
+  document.querySelectorAll('#courseFilters .filter-tag').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderAllCourses();
+}
+
+function filterCourses() {
+  renderAllCourses();
+}
+
+// ===== COURSE DETAIL =====
+function showCourseDetail(courseId) {
+  const course = courses.find(c => c.id === courseId);
+  if (!course) return;
+
+  const content = document.getElementById('courseDetailContent');
+  content.innerHTML = `
+    <div class="course-detail-info">
+      <span class="badge badge-primary" style="margin-bottom:1rem;display:inline-block;">${course.category}</span>
+      <h1>${course.title}</h1>
+      <p style="color:#94a3b8;margin-bottom:1.5rem;">${course.description}</p>
+      <div class="course-detail-meta">
+        <div class="course-detail-meta-item"><i class="fas fa-user"></i> ${course.instructor}</div>
+        <div class="course-detail-meta-item"><i class="fas fa-clock"></i> ${course.duration}</div>
+        <div class="course-detail-meta-item"><i class="fas fa-play-circle"></i> ${course.lessons} aulas</div>
+        <div class="course-detail-meta-item"><i class="fas fa-users"></i> ${course.students} alunos</div>
+        <div class="course-detail-meta-item"><i class="fas fa-star" style="color:var(--accent);"></i> ${course.rating}</div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        ${currentUser ? `<button class="btn btn-primary" style="font-size:1.1rem;padding:14px 32px;" onclick="buyCourse(${course.id})"><i class="fas fa-shopping-cart"></i> Comprar Agora</button>` : `<button class="btn btn-primary" style="font-size:1.1rem;padding:14px 32px;" onclick="showPage('login')"><i class="fas fa-sign-in-alt"></i> Entre para Comprar</button>`}
+        ${currentUser?.role === 'affiliate' ? `<button class="btn btn-success" style="font-size:1.1rem;padding:14px 32px;" onclick="copyAffiliateLink(${course.id})"><i class="fas fa-link"></i> Copiar Link de Afiliado</button>` : ''}
+      </div>
+    </div>
+    <div class="course-detail-card">
+      <div style="height:180px;background:var(--gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:5rem;color:rgba(255,255,255,0.3);margin-bottom:1.5rem;"><i class="fab ${course.image}"></i></div>
+      <div class="course-detail-price">R$ ${course.price}<span class="old">R$ ${course.oldPrice}</span></div>
+      <div style="color:var(--gray);font-size:0.9rem;margin-bottom:1rem;">ou 12x de R$ ${(course.price/12).toFixed(2)}</div>
+      <ul class="course-detail-features">
+        <li><i class="fas fa-check-circle"></i> Acesso vitalicio</li>
+        <li><i class="fas fa-check-circle"></i> ${course.lessons} aulas em video</li>
+        <li><i class="fas fa-check-circle"></i> Certificado de conclusao</li>
+        <li><i class="fas fa-check-circle"></i> Suporte do instrutor</li>
+        <li><i class="fas fa-check-circle"></i> Acesso no celular e TV</li>
+        <li><i class="fas fa-check-circle"></i> Garantia de 7 dias</li>
+      </ul>
+      ${currentUser?.role === 'affiliate' ? `<div style="background:rgba(16,185,129,0.1);border-radius:12px;padding:1rem;text-align:center;margin-top:1rem;"><div style="font-size:0.85rem;color:var(--gray);">Comissao do afiliado</div><div style="font-size:1.5rem;font-weight:900;color:var(--secondary);">${course.commission}</div></div>` : ''}
+    </div>
+  `;
+
+  const lessonsContainer = document.getElementById('courseLessons');
+  const courseLessons = lessons.filter(l => l.courseId === courseId);
+  lessonsContainer.innerHTML = courseLessons.map((l, i) => `
+    <div class="lesson-item ${l.completed ? 'active' : ''}">
+      <div class="lesson-number">${i + 1}</div>
+      <div class="lesson-info"><div class="lesson-title">${l.title}</div><div class="lesson-duration"><i class="fas fa-play-circle"></i> ${l.duration}</div></div>
+      ${l.completed ? '<div class="lesson-status"><i class="fas fa-check-circle"></i></div>' : '<div style="color:var(--gray);"><i class="fas fa-lock"></i></div>'}
+    </div>
+  `).join('');
+
+  document.getElementById('courseInstructor').innerHTML = `
+    <div style="background:var(--white);border-radius:16px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--gray-light);">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.2rem;">${course.instructor.split(' ').map(n => n[0]).join('')}</div>
+        <div><div style="font-weight:700;font-size:1.1rem;">${course.instructor}</div><div style="color:var(--gray);font-size:0.9rem;">Instrutor Senior</div></div>
+      </div>
+      <p style="color:var(--gray);font-size:0.95rem;">Especialista em ${course.category} com mais de 10 anos de experiencia no mercado. Ja formou mais de ${course.students} alunos.</p>
+      <div style="display:flex;gap:1rem;margin-top:1rem;">
+        <span class="badge badge-primary"><i class="fas fa-star"></i> 4.9</span>
+        <span class="badge badge-success"><i class="fas fa-users"></i> ${course.students} alunos</span>
+        <span class="badge badge-warning"><i class="fas fa-play-circle"></i> ${course.lessons} aulas</span>
+      </div>
+    </div>
+  `;
+
+  showPage('course-detail');
+}
+
+function buyCourse(courseId) {
+  showToast('Curso adicionado ao carrinho! Redirecionando para pagamento...', 'success');
+  setTimeout(() => {
+    showToast('Pagamento simulado com sucesso! Curso liberado.', 'success');
+  }, 2000);
+}
+
+function copyAffiliateLink(courseId) {
+  const link = `https://eduafiliados.com/curso/${courseId}?ref=${currentUser?.id || 'demo123'}`;
+  navigator.clipboard.writeText(link).then(() => {
+    showToast('Link de afiliado copiado!', 'success');
+  }).catch(() => {
+    showToast(link, 'info');
+  });
+}
+
+// ===== AUTH =====
+function selectRole(el, role) {
+  document.querySelectorAll('.role-option').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRole = role;
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  showToast('Login realizado com sucesso!', 'success');
+  currentUser = { id: 'demo123', name: 'Usuario Demo', email: 'demo@email.com', role: 'student' };
+  updateNavForUser();
+  showPage('student-dashboard');
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('regName').value;
+  showToast(`Conta criada com sucesso como ${selectedRole === 'affiliate' ? 'Afiliado' : 'Aluno'}!`, 'success');
+  currentUser = { id: 'new123', name: name, email: document.getElementById('regEmail').value, role: selectedRole };
+  updateNavForUser();
+  if (selectedRole === 'affiliate') showPage('affiliate-dashboard');
+  else showPage('student-dashboard');
+}
+
+function demoLogin(role) {
+  const demoUsers = {
+    aluno: { id: 'stu001', name: 'Joao Aluno', email: 'joao@email.com', role: 'student' },
+    afiliado: { id: 'aff001', name: 'Maria Afiliada', email: 'maria@email.com', role: 'affiliate' },
+    admin: { id: 'adm001', name: 'Admin Master', email: 'admin@email.com', role: 'admin' }
+  };
+  currentUser = demoUsers[role];
+  showToast(`Logado como ${role === 'aluno' ? 'Aluno' : role === 'afiliado' ? 'Afiliado' : 'Administrador'}!`, 'success');
+  updateNavForUser();
+  if (role === 'admin') showPage('admin-dashboard');
+  else if (role === 'afiliado') showPage('affiliate-dashboard');
+  else showPage('student-dashboard');
+}
+
+function logout() {
+  currentUser = null;
+  updateNavForGuest();
+  showToast('Logout realizado com sucesso!', 'info');
+  showPage('home');
+}
+
+// ===== STUDENT DASHBOARD =====
+function showStudentTab(tab) {
+  document.querySelectorAll('#studentMainContent > div').forEach(d => d.style.display = 'none');
+  document.getElementById('student-tab-' + tab).style.display = 'block';
+  document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (tab === 'my-courses') renderStudentCourses();
+  if (tab === 'certificates') renderStudentCertificates();
+}
+
+function loadStudentDashboard() {
+  if (!currentUser) return;
+  document.getElementById('studentName').textContent = currentUser.name;
+  document.getElementById('studentWelcomeName').textContent = currentUser.name.split(' ')[0];
+  document.getElementById('studentAvatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  document.getElementById('settingsName').value = currentUser.name;
+  document.getElementById('settingsEmail').value = currentUser.email;
+
+  document.getElementById('studentStatCourses').textContent = '3';
+  document.getElementById('studentStatHours').textContent = '42h';
+  document.getElementById('studentStatCertificates').textContent = '1';
+  document.getElementById('studentStatProgress').textContent = '65%';
+
+  renderContinueWatching();
+}
+
+function renderContinueWatching() {
+  const tbody = document.querySelector('#continueWatchingTable tbody');
+  const myCourses = courses.slice(0, 3);
+  tbody.innerHTML = myCourses.map(c => `
+    <tr>
+      <td><div class="table-user"><div class="table-avatar"><i class="fab ${c.image}"></i></div><span>${c.title}</span></div></td>
+      <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:100px;height:6px;background:var(--gray-light);border-radius:3px;overflow:hidden;"><div style="width:${Math.random()*60+20}%;height:100%;background:var(--gradient);border-radius:3px;"></div></div><span style="font-size:0.8rem;color:var(--gray);">${Math.floor(Math.random()*60+20)}%</span></div></td>
+      <td><button class="btn btn-primary btn-sm" onclick="showCourseDetail(${c.id})"><i class="fas fa-play"></i> Continuar</button></td>
+    </tr>
+  `).join('');
+}
+
+function renderStudentCourses() {
+  const container = document.getElementById('studentCoursesGrid');
+  const myCourses = courses.slice(0, 4);
+  container.innerHTML = myCourses.map(c => `
+    <div class="course-card">
+      <div class="course-image"><i class="fab ${c.image}"></i></div>
+      <div class="course-content">
+        <div class="course-category">${c.category}</div>
+        <div class="course-title">${c.title}</div>
+        <div style="margin-top:1rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.85rem;">
+            <span>Progresso</span><span style="font-weight:700;color:var(--primary);">${Math.floor(Math.random()*60+20)}%</span>
+          </div>
+          <div class="course-progress-bar"><div class="course-progress-fill" style="width:${Math.random()*60+20}%"></div></div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+          <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center;" onclick="showCourseDetail(${c.id})"><i class="fas fa-play"></i> Assistir</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderStudentCertificates() {
+  const tbody = document.querySelector('#certificatesTable tbody');
+  tbody.innerHTML = `
+    <tr>
+      <td><div class="table-user"><div class="table-avatar"><i class="fab fa-python"></i></div><span>Python do Zero ao Avancado</span></div></td>
+      <td>15/05/2024</td>
+      <td><span class="badge badge-success">9.2/10</span></td>
+      <td><button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Baixar</button></td>
+    </tr>
+  `;
+}
+
+function saveSettings() {
+  showToast('Configuracoes salvas com sucesso!', 'success');
+}
+
+// ===== AFFILIATE DASHBOARD =====
+function showAffiliateTab(tab) {
+  document.querySelectorAll('#affiliateMainContent > div').forEach(d => d.style.display = 'none');
+  document.getElementById('affiliate-tab-' + tab).style.display = 'block';
+  document.querySelectorAll('#page-affiliate-dashboard .sidebar-menu a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (tab === 'links') renderAffiliateLinks();
+  if (tab === 'sales') renderAffiliateSales();
+  if (tab === 'withdrawal') loadWithdrawal();
+}
+
+function loadAffiliateDashboard() {
+  if (!currentUser) return;
+  document.getElementById('affiliateName').textContent = currentUser.name;
+  document.getElementById('affiliateAvatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+  document.getElementById('affiliateBalance').textContent = 'R$ 15.420,00';
+  document.getElementById('affiliateSales').textContent = '45';
+  document.getElementById('affiliateClicks').textContent = '2.340';
+  document.getElementById('affiliateConversion').textContent = '1.9%';
+  document.getElementById('weeklyEarnings').textContent = '2.440';
+
+  document.getElementById('affSettingsName').value = currentUser.name;
+  document.getElementById('affSettingsEmail').value = currentUser.email;
+
+  renderRecentSales();
+}
+
+function renderRecentSales() {
+  const tbody = document.querySelector('#recentSalesTable tbody');
+  tbody.innerHTML = sales.slice(0, 5).map(s => `
+    <tr>
+      <td>${s.course}</td>
+      <td>${s.buyer}</td>
+      <td style="font-weight:700;">R$ ${s.value.toFixed(2)}</td>
+      <td style="color:var(--secondary);font-weight:700;">R$ ${s.commission.toFixed(2)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderAffiliateLinks() {
+  const container = document.getElementById('affiliateLinksContainer');
+  container.innerHTML = courses.map(c => {
+    const link = `https://eduafiliados.com/curso/${c.id}?ref=${currentUser?.id || 'demo123'}`;
+    const clicks = Math.floor(Math.random() * 500 + 50);
+    const salesCount = Math.floor(Math.random() * 20 + 1);
+    const earnings = (salesCount * c.price * parseInt(c.commission) / 100).toFixed(2);
+    return `
+      <div class="link-card">
+        <div class="link-card-header">
+          <div class="table-avatar"><i class="fab ${c.image}"></i></div>
+          <div class="link-card-course">${c.title}</div>
+          <span class="link-card-commission">${c.commission} comissao</span>
+        </div>
+        <div class="link-input-group">
+          <input type="text" value="${link}" readonly id="link-${c.id}">
+          <button class="btn btn-primary" onclick="copyLink('link-${c.id}')"><i class="fas fa-copy"></i> Copiar</button>
+        </div>
+        <div class="link-stats">
+          <div class="link-stat"><div class="link-stat-value">${clicks}</div><div class="link-stat-label">Cliques</div></div>
+          <div class="link-stat"><div class="link-stat-value">${salesCount}</div><div class="link-stat-label">Vendas</div></div>
+          <div class="link-stat"><div class="link-stat-value" style="color:var(--secondary);">R$ ${earnings}</div><div class="link-stat-label">Ganhos</div></div>
+          <div class="link-stat"><div class="link-stat-value">${(salesCount/clicks*100).toFixed(1)}%</div><div class="link-stat-label">Conversao</div></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function copyLink(inputId) {
+  const input = document.getElementById(inputId);
+  input.select();
+  navigator.clipboard.writeText(input.value).then(() => {
+    showToast('Link copiado para a area de transferencia!', 'success');
+  });
+}
+
+function renderAffiliateSales() {
+  const tbody = document.querySelector('#allSalesTable tbody');
+  tbody.innerHTML = sales.map(s => `
+    <tr>
+      <td>${s.date}</td>
+      <td>${s.course}</td>
+      <td>${s.buyer}</td>
+      <td style="font-weight:700;">R$ ${s.value.toFixed(2)}</td>
+      <td style="color:var(--secondary);font-weight:700;">R$ ${s.commission.toFixed(2)}</td>
+      <td><span class="status-badge status-completed">Pago</span></td>
+    </tr>
+  `).join('');
+}
+
+function loadWithdrawal() {
+  document.getElementById('withdrawalBalance').textContent = 'R$ 15.420,00';
+  const tbody = document.querySelector('#withdrawalHistoryTable tbody');
+  tbody.innerHTML = withdrawals.map(w => `
+    <tr>
+      <td>${w.date}</td>
+      <td style="font-weight:700;">R$ ${w.value.toFixed(2)}</td>
+      <td>${w.method}</td>
+      <td><span class="status-badge ${w.status === 'completed' ? 'status-completed' : 'status-pending'}">${w.status === 'completed' ? 'Pago' : 'Pendente'}</span></td>
+    </tr>
+  `).join('');
+}
+
+function selectWithdrawalMethod(el, method) {
+  document.querySelectorAll('.withdrawal-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedWithdrawalMethod = method;
+  const input = document.getElementById('withdrawalKey');
+  if (method === 'pix') input.placeholder = 'Digite sua chave PIX';
+  else if (method === 'paypal') input.placeholder = 'Digite seu email PayPal';
+  else input.placeholder = 'Digite os dados bancarios';
+}
+
+function requestWithdrawal() {
+  const amount = parseFloat(document.getElementById('withdrawalAmount').value);
+  if (!amount || amount < 50) {
+    showToast('O valor minimo para saque e R$ 50,00', 'error');
+    return;
+  }
+  showToast(`Saque de R$ ${amount.toFixed(2)} solicitado com sucesso!`, 'success');
+  document.getElementById('withdrawalAmount').value = '';
+}
+
+function saveAffiliateSettings() {
+  showToast('Configuracoes do afiliado salvas com sucesso!', 'success');
+}
+
+// ===== ADMIN DASHBOARD =====
+function showAdminTab(tab) {
+  document.querySelectorAll('#adminMainContent > div').forEach(d => d.style.display = 'none');
+  document.getElementById('admin-tab-' + tab).style.display = 'block';
+  document.querySelectorAll('#page-admin-dashboard .sidebar-menu a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (tab === 'courses') renderAdminCourses();
+  if (tab === 'students') renderAdminStudents();
+  if (tab === 'affiliates') renderAdminAffiliates();
+  if (tab === 'sales') renderAdminSales();
+  if (tab === 'withdrawals') renderAdminWithdrawals();
+}
+
+function loadAdminDashboard() {
+  if (!currentUser) return;
+  document.getElementById('adminName').textContent = currentUser.name;
+  document.getElementById('adminAvatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+  document.getElementById('adminRevenue').textContent = 'R$ 124.580,00';
+  document.getElementById('adminSales').textContent = '487';
+  document.getElementById('adminStudents').textContent = '1.240';
+  document.getElementById('adminAffiliates').textContent = '320';
+  document.getElementById('adminWeeklyRevenue').textContent = '25.240';
+
+  const tbody = document.querySelector('#adminRecentSalesTable tbody');
+  tbody.innerHTML = sales.slice(0, 5).map(s => `
+    <tr>
+      <td>${s.course}</td>
+      <td>${s.buyer}</td>
+      <td style="font-weight:700;">R$ ${s.value.toFixed(2)}</td>
+      <td>${s.date}</td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminCourses() {
+  const tbody = document.querySelector('#adminCoursesTable tbody');
+  tbody.innerHTML = courses.map(c => `
+    <tr>
+      <td><div class="table-user"><div class="table-avatar"><i class="fab ${c.image}"></i></div><span>${c.title}</span></div></td>
+      <td>${c.category}</td>
+      <td>R$ ${c.price}</td>
+      <td>${c.students}</td>
+      <td>${c.commission}</td>
+      <td><span class="status-badge status-active">Ativo</span></td>
+      <td><button class="btn btn-ghost btn-sm" onclick="editCourse(${c.id})"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deleteCourse(${c.id})"><i class="fas fa-trash"></i></button></td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminStudents() {
+  const tbody = document.querySelector('#adminStudentsTable tbody');
+  tbody.innerHTML = students.map(s => `
+    <tr>
+      <td><div class="table-user"><div class="table-avatar">${s.name.split(' ').map(n => n[0]).join('')}</div><span>${s.name}</span></div></td>
+      <td>${s.email}</td>
+      <td>${s.courses}</td>
+      <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:60px;height:6px;background:var(--gray-light);border-radius:3px;overflow:hidden;"><div style="width:${s.progress}%;height:100%;background:var(--gradient);border-radius:3px;"></div></div><span style="font-size:0.8rem;">${s.progress}%</span></div></td>
+      <td><span class="status-badge status-active">Ativo</span></td>
+      <td><button class="btn btn-ghost btn-sm"><i class="fas fa-eye"></i></button></td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminAffiliates() {
+  const tbody = document.querySelector('#adminAffiliatesTable tbody');
+  tbody.innerHTML = affiliates.map(a => `
+    <tr>
+      <td><div class="table-user"><div class="table-avatar">${a.name.split(' ').map(n => n[0]).join('')}</div><span>${a.name}</span></div></td>
+      <td>${a.email}</td>
+      <td>${a.sales}</td>
+      <td style="color:var(--secondary);font-weight:700;">R$ ${a.commissions.toFixed(2)}</td>
+      <td style="font-weight:700;">R$ ${a.balance.toFixed(2)}</td>
+      <td><span class="status-badge status-active">Ativo</span></td>
+      <td><button class="btn btn-ghost btn-sm"><i class="fas fa-eye"></i></button></td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminSales() {
+  const tbody = document.querySelector('#adminAllSalesTable tbody');
+  tbody.innerHTML = sales.map(s => `
+    <tr>
+      <td>${s.date}</td>
+      <td>${s.course}</td>
+      <td>${s.buyer}</td>
+      <td>${s.affiliate}</td>
+      <td style="font-weight:700;">R$ ${s.value.toFixed(2)}</td>
+      <td style="color:var(--secondary);font-weight:700;">R$ ${s.commission.toFixed(2)}</td>
+      <td><span class="status-badge status-completed">Concluido</span></td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminWithdrawals() {
+  const tbody = document.querySelector('#adminWithdrawalsTable tbody');
+  tbody.innerHTML = withdrawals.map(w => `
+    <tr>
+      <td>${w.date}</td>
+      <td>${w.affiliate}</td>
+      <td style="font-weight:700;">R$ ${w.value.toFixed(2)}</td>
+      <td>${w.method}</td>
+      <td>${w.key}</td>
+      <td><span class="status-badge ${w.status === 'completed' ? 'status-completed' : 'status-pending'}">${w.status === 'completed' ? 'Pago' : 'Pendente'}</span></td>
+      <td>${w.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="approveWithdrawal(${w.id})"><i class="fas fa-check"></i> Aprovar</button>` : '<span style="color:var(--gray);">-</span>'}</td>
+    </tr>
+  `).join('');
+}
+
+function approveWithdrawal(id) {
+  showToast('Saque aprovado com sucesso!', 'success');
+  renderAdminWithdrawals();
+}
+
+function openAddCourseModal() {
+  document.getElementById('modalTitle').textContent = 'Adicionar Novo Curso';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="form-group"><label>Titulo do Curso</label><input type="text" id="newCourseTitle" placeholder="Ex: Python do Zero"></div>
+    <div class="form-group"><label>Categoria</label><select id="newCourseCategory"><option value="programacao">Programacao</option><option value="marketing">Marketing</option><option value="design">Design</option><option value="negocios">Negocios</option><option value="idiomas">Idiomas</option><option value="financas">Financas</option></select></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Preco (R$)</label><input type="number" id="newCoursePrice" placeholder="297"></div>
+      <div class="form-group"><label>Preco Antigo (R$)</label><input type="number" id="newCourseOldPrice" placeholder="597"></div>
+    </div>
+    <div class="form-group"><label>Comissao (%)</label><input type="number" id="newCourseCommission" placeholder="40" min="0" max="100"></div>
+    <div class="form-group"><label>Descricao</label><textarea id="newCourseDesc" rows="3" placeholder="Descricao do curso..."></textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="addNewCourse()"><i class="fas fa-plus"></i> Criar Curso</button>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function addNewCourse() {
+  showToast('Curso criado com sucesso!', 'success');
+  closeModal();
+  renderAdminCourses();
+}
+
+function editCourse(id) {
+  showToast('Funcao de edicao em desenvolvimento', 'info');
+}
+
+function deleteCourse(id) {
+  if (confirm('Tem certeza que deseja excluir este curso?')) {
+    showToast('Curso excluido com sucesso!', 'success');
+    renderAdminCourses();
+  }
+}
+
+// ===== MODAL =====
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+}
+
+// ===== TOAST =====
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+  toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+  const navLinks = document.getElementById('navLinks');
+  navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  navLinks.style.position = 'absolute';
+  navLinks.style.top = '70px';
+  navLinks.style.left = '0';
+  navLinks.style.right = '0';
+  navLinks.style.background = 'white';
+  navLinks.style.flexDirection = 'column';
+  navLinks.style.padding = '1rem';
+  navLinks.style.boxShadow = 'var(--shadow)';
+}
+</script>
+</body>
+</html>
